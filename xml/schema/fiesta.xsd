@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:attributeGroup name="Identifiable">
+    <xs:annotation>
+      <xs:documentation>Used for all elements that need an identifier that is unique throughout a document.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="id" use="required" type="xs:ID"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="Named">
+    <xs:annotation>
+      <xs:documentation>Used for elements that have a name (optional).</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="FiestaDocument" type="FiestaDocument">
+    <xs:annotation>
+      <xs:documentation>The top-level element, root for all FiESTA documents.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FiestaDocument">
+    <xs:annotation>
+      <xs:documentation>A document containing all elements of a typical annotation document or data collection based on segment from space-time relevant to a research question.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Head"/>
+      <xs:element name="ScaleSet" type="ScaleSet"/>
+      <xs:element name="LayerSet" type="LayerSet"/>
+      <xs:element name="ItemSet"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Head"/>
+  <xs:complexType name="ScaleSet">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" name="Scale" type="Scale"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LayerSet">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="1" name="Layer" type="Layer"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="LayerConnector" type="LayerConnector"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ItemSet">
+    <xs:sequence>
+      <xs:element name="Item"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Scale">
+    <xs:attributeGroup ref="Identifiable"/>
+    <xs:attributeGroup ref="Named"/>
+    <xs:attribute name="unit" type="xs:string" use="optional"/>
+    <xs:attribute name="dimension" type="xs:string" use="optional"/>
+    <xs:attribute name="role" type="xs:string" use="optional"/>
+    <xs:attribute name="continuous" type="xs:string" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="Layer">
+    <xs:attributeGroup ref="Identifiable"/>
+    <xs:attributeGroup ref="Named"/>
+  </xs:complexType>
+  <xs:complexType name="LayerConnector">
+    <xs:attributeGroup ref="Identifiable"/>
+    <xs:attribute name="source" type="xs:IDREF" use="required"/>
+    <xs:attribute name="target" type="xs:IDREF" use="required"/>
+    <xs:attribute name="role" type="xs:string" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="Item">
+    <xs:sequence>
+      <xs:element name="Links">
+        <xs:complexType>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element name="LayerLink" type="LayerLink"/>
+            <xs:element name="ItemLink" type="ItemLink"/>
+            <xs:element name="PointLink" type="PointLink"/>
+            <xs:element name="IntervalLink" type="IntervalLink"/>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Data" type="Data"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="Identifiable"/>
+  </xs:complexType>
+  <xs:complexType name="Link">
+    <xs:attributeGroup ref="Identifiable"/>
+    <xs:attribute name="target" type="xs:IDREF" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="LayerLink">
+    <xs:complexContent>
+      <xs:extension base="Link">
+        <xs:attribute name="role" type="xs:string" use="optional"/>
+        <xs:attribute name="index" type="xs:nonNegativeInteger" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ItemLink">
+    <xs:complexContent>
+      <xs:extension base="Link">
+        <xs:attribute name="role" type="xs:string" use="optional"/>
+        <xs:attribute name="index" type="xs:nonNegativeInteger" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PointLink">
+    <xs:complexContent>
+      <xs:extension base="Link">
+        <xs:attribute name="point" type="xs:double" use="required"/>
+        <xs:attribute name="role" type="xs:string" use="optional"/>
+        <xs:attribute name="index" type="xs:nonNegativeInteger" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IntervalLink">
+    <xs:complexContent>
+      <xs:extension base="Link">
+        <xs:attribute name="min" type="xs:double" use="required"/>
+        <xs:attribute name="max" type="xs:double" use="required"/>
+        <xs:attribute name="role" type="xs:string" use="optional"/>
+        <xs:attribute name="index" type="xs:nonNegativeInteger" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Data">
+    <xs:choice>
+      <xs:element name="String" type="xs:string"/>
+      <xs:element name="Int" type="xs:long"/>
+      <xs:element name="Float" type="xs:double"/>
+      <xs:element name="Bool" type="xs:boolean"/>
+      <xs:element name="Date" type="xs:date"/>
+      <xs:element name="Time" type="xs:time"/>
+      <xs:element name="DateTime" type="xs:dateTime"/>
+      <xs:element name="Base64Binary" type="xs:base64Binary"/>
+      <xs:element name="Decimal" type="xs:decimal"/>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>
