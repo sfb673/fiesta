@@ -1,4 +1,6 @@
-# fiesta
+# FiESTA
+
+## About FiESTA
 
 This repository contains an XML schema and the documentation for FiESTA,
 a microFormat used for representing Extensive
@@ -7,6 +9,15 @@ SpatioTemporal Annotations.
 FiESTA is used as the micro-level document format inside
 [MExiCo](https://github.com/sfb673/mexico), a library for the management
 of multimodal data collections.
+
+## Release notes
+
+### Version 1.0.0 – Initial
+
+*20 May 2013*
+
++ **XML Schema File for ToE**: First version of schema file, mainly undocumented, but an adequate starting point.
+
 ## Copyright
 
 Copyright (c) 2013 Peter Menke, SFB 673, Universität Bielefeld.
