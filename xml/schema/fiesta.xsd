@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+  targetNamespace="http://data.sfb673.org/fiesta" xmlns:fiesta="http://data.sfb673.org/fiesta"
+  xmlns="http://data.sfb673.org/fiesta" version="1.0.1">
   <xs:attributeGroup name="Identifiable">
     <xs:annotation>
       <xs:documentation>Used for all elements that need an identifier that is unique throughout a document.
