@@ -12,6 +12,13 @@ of multimodal data collections.
 
 ## Release notes
 
+### Version 1.1.0 - Object descriptions, map data type
+
+*21 June 2013*
+
++ **Optional description fields for major elements**: Added Description elements to most major elements
++ **Map data type for Item Data **: Added new Map data type to Item Data element.
+
 ### Version 1.0.0 – Initial
 
 *20 May 2013*
