@@ -148,6 +148,19 @@
       <xs:element name="DateTime" type="xs:dateTime"/>
       <xs:element name="Base64Binary" type="xs:base64Binary"/>
       <xs:element name="Decimal" type="xs:decimal"/>
+      <xs:element name="Map" type="Map"/>
     </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="Map">
+    <xs:sequence>
+      <xs:element name="MapItem" maxOccurs="unbounded" minOccurs="0" type="MapItem"> </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MapItem">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="key" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
   </xs:complexType>
 </xs:schema>
