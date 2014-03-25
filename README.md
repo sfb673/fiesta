@@ -12,6 +12,13 @@ of multimodal data collections.
 
 ## Release notes
 
+### 1.2.0 (Compatibility with MExiCo 0.0.11)
+
+*25 March 2014*
+
+The schema file has been updated and is now reflecting the FiESTA data structures
+as present in files created with MExiCo v0.0.11.
+
 ### Version 1.1.0 - Object descriptions, map data type
 
 *21 June 2013*
