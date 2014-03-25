@@ -15,6 +15,7 @@
     </xs:annotation>
     <xs:attribute name="name" type="xs:string"/>
   </xs:attributeGroup>
+  <xs:attributeGroup name="newAttributeGroup"/>
   <xs:group name="DescriptionGroup">
     <xs:sequence>
       <xs:element maxOccurs="1" minOccurs="0" name="Description" type="Description"/>
@@ -34,13 +35,21 @@
       <xs:group ref="DescriptionGroup"/>
       <xs:element name="ScaleSet" type="ScaleSet"/>
       <xs:element name="LayerSet" type="LayerSet"/>
-      <xs:element name="ItemSet"/>
+      <xs:element name="ItemSet" type="ItemSet"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="Description">
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
-  <xs:complexType name="Head"/>
+  <xs:complexType name="Head">
+    <xs:annotation>
+      <xs:documentation>An area where metadata about a document can be stored. This head is divided into sections,
+      each with a specific domain or subject.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Section" type="Section"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="ScaleSet">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" name="Scale" type="Scale"/>
@@ -54,7 +63,7 @@
   </xs:complexType>
   <xs:complexType name="ItemSet">
     <xs:sequence>
-      <xs:element name="Item"/>
+      <xs:element name="Item" maxOccurs="unbounded" minOccurs="0" type="Item"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="Scale">
@@ -67,7 +76,10 @@
     <xs:attribute name="continuous" type="xs:string" use="optional"/>
   </xs:complexType>
   <xs:complexType name="Layer">
-    <xs:group ref="DescriptionGroup"/>
+    <xs:sequence>
+      <xs:element name="PropertyMap" type="PropertyMap" minOccurs="0" maxOccurs="1"/>
+      <xs:group ref="DescriptionGroup"/>
+    </xs:sequence>
     <xs:attributeGroup ref="Identifiable"/>
     <xs:attributeGroup ref="Named"/>
   </xs:complexType>
@@ -163,4 +175,31 @@
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
+  <xs:complexType name="Section">
+    <xs:sequence maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="PropertyLikeElements"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PropertyMap">
+    <xs:sequence maxOccurs="unbounded" minOccurs="0">
+      <xs:group ref="PropertyLikeElements"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="WithKey"/>
+  </xs:complexType>
+  <xs:group name="PropertyLikeElements">
+    <xs:choice>
+      <xs:element name="PropertyMap" type="PropertyMap"/>
+      <xs:element name="Property" type="Property"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="Property">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="WithKey"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:attributeGroup name="WithKey">
+    <xs:attribute name="key" type="xs:NCName" use="optional"/>
+  </xs:attributeGroup>
 </xs:schema>
